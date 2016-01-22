@@ -163,8 +163,8 @@
                             if (/\s+$/.test(currentQuery) || currentQuery.length === 0) {
                                 return process([]);
                             }
-                            return $.get(settings.remote, { query: currentQuery }, function(data) {
-                                return process(data.items);
+                            return $.get(settings.remote, { query: currentQuery }, function (data) {
+                                return process(data.items || data);
                             });
                         };
                     }
