@@ -89,6 +89,17 @@ $('#multi-users').mention({
 });
 ```
 
+## Remote Querying
+Querying for users can also target remote locations. For example, when initializing the plug-in, ensure that the `remote` property points to the URL that you wish to query.
+```javascript
+$('#multi-users').mention({
+    remote: 'your-url-here'
+});
+```
+This will pass your current search term (i.e. the difference between the previous delimiter and the current cursor position) as a parameter called `query` to your remote location and it will return the elements that the query yields. You can see an example of it in action in **[this demo](https://rawgit.com/Rionmonster/Mention.js/remote-queries/demo/remote.html)** or seen below : 
+
+![Remote Access in Action](http://i.imgur.com/SZQM6MU.gif)
+
 
 ## Defaults
 `````javascript
