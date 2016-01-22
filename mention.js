@@ -153,8 +153,24 @@
             return this.each(function() {
                 var _this = $(this);
                 if (_checkDependencies()) {
+                    // Resolve source (either from remote url if available or default collection)
+                    var resolvedSource = settings.users;
+                    if (settings.remote) {
+                        // If a remote url exists, then define the function to retrieve your items from it
+                        resolvedSource = function(query, process) {
+                            var currentQuery = _extractCurrentQuery(this.query, this.$element[0].selectionStart).substring(1);
+                            // If the current query ends with a space, then ignore it
+                            if (/\s+$/.test(currentQuery) || currentQuery.length === 0) {
+                                return process([]);
+                            }
+                            return $.get(settings.remote, { query: currentQuery }, function(data) {
+                                return process(data.items);
+                            });
+                        };
+                    }
+                    // Extend typeahead as necessary
                     _this.typeahead($.extend({
-                        source: settings.users,
+                        source: resolvedSource,
                         matcher: _matcher,
                         updater: _updater,
                         sorter: _sorter
